@@ -28,14 +28,18 @@ class _HomeViewState extends State<HomeView> {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               final user = FirebaseAuth.instance.currentUser;
-              print(user);
-              if (user?.emailVerified ?? false) {
-                return const Text('Done..');
+              if (user != null) {
+                if (user.emailVerified) {
+                  print('Email is verified');
+                } else {
+                  return const VerifyEmailView();
+                }
               } else {
-                print('You need to verfy your email first.');
-                return const VerifyEmailView();
+                return const LoginView();
               }
-              return const LoginView();
+
+              return const Text('Done');
+
             default:
               return const CircularProgressIndicator();
           }
