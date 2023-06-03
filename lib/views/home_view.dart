@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mypersonelnotes/main.dart';
 import 'package:mypersonelnotes/views/login_view.dart';
 import 'package:mypersonelnotes/views/verify_email_view.dart';
 
@@ -30,15 +31,13 @@ class _HomeViewState extends State<HomeView> {
               final user = FirebaseAuth.instance.currentUser;
               if (user != null) {
                 if (user.emailVerified) {
-                  print('Email is verified');
+                  return const NotesView();
                 } else {
                   return const VerifyEmailView();
                 }
               } else {
                 return const LoginView();
               }
-
-              return const Text('Done');
 
             default:
               return const CircularProgressIndicator();
