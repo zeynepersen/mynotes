@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mypersonelnotes/views/login_view.dart';
 import 'package:mypersonelnotes/views/verify_email_view.dart';
 
 import '../firebase_options.dart';
@@ -27,20 +28,16 @@ class _HomeViewState extends State<HomeView> {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               final user = FirebaseAuth.instance.currentUser;
+              print(user);
               if (user?.emailVerified ?? false) {
-                print('You are a verified user.');
+                return const Text('Done..');
               } else {
                 print('You need to verfy your email first.');
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const VerifyEmailView(),
-                  ),
-                );
+                return const VerifyEmailView();
               }
-
-              return const Text('Done..');
+              return const LoginView();
             default:
-              return const Text('Loading...');
+              return const CircularProgressIndicator();
           }
         },
       ),
